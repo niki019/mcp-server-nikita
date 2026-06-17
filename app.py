@@ -241,7 +241,7 @@ if st.sidebar.button("Trigger Weekly Review Pulse"):
         status_box.error(f"Pipeline crashed with exception: {e}")
 
 # 6. Audit Logs Visualizers
-tab1, tab2 = st.tabs(["📋 Execution History", "📦 Deliveries Ledger"])
+tab1, tab2, tab3 = st.tabs(["📋 Execution History", "📦 Deliveries Ledger", "📖 Documentation & Guide"])
 
 with tab1:
     st.subheader("Weekly Run History")
@@ -284,3 +284,15 @@ with tab2:
         )
     else:
         st.info("No deliveries have been logged in this database yet.")
+
+with tab3:
+    st.subheader("Documentation & Project Guide")
+    if os.path.exists("README.md"):
+        try:
+            with open("README.md", "r", encoding="utf-8") as f:
+                readme_content = f.read()
+            st.markdown(readme_content)
+        except Exception as e:
+            st.error(f"Error reading README.md file: {e}")
+    else:
+        st.info("README.md file not found at the root of the project.")
