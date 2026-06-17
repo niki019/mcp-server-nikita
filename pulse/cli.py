@@ -3,6 +3,11 @@ import logging
 import argparse
 import datetime
 import asyncio
+from pulse.bootstrap import bootstrap_secrets
+
+# Bootstrap credentials from environment variables if running in cloud/cron environment
+bootstrap_secrets()
+
 from pulse.agent.orchestrator import run_pulse_pipeline
 from pulse.ledger.store import get_run, get_deliveries
 

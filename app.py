@@ -5,6 +5,11 @@ import asyncio
 import os
 import json
 import datetime
+from pulse.bootstrap import bootstrap_secrets
+
+# Unpack credentials from environment variables if present (for cloud environments)
+bootstrap_secrets()
+
 from pulse.agent.orchestrator import run_pulse_pipeline
 from pulse.config import DB_PATH, get_product_config
 
