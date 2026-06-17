@@ -1,0 +1,25 @@
+# Python environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Local review cache & database logs
+.cache/
+data/
+run_audit.db
+mcp-servers/gmail-mcp/gmail_idempotency.db
+
+# SQLite database files
+*.db
+*.sqlite
+
+# Google API Credentials & Tokens
+token.json
+credentials.json
+mcp_server/token.json
+mcp_server/credentials.json
+
+# IDE settings
+.vscode/
+.idea/
