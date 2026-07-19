@@ -27,3 +27,7 @@ mcp_server/credentials.json
 # Streamlit secrets
 .streamlit/
 
+# Local Environment Variables
+.env
+
+
