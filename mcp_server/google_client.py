@@ -11,7 +11,8 @@ from email.mime.multipart import MIMEMultipart
 # Define scopes required for Docs and Gmail APIs
 SCOPES = [
     'https://www.googleapis.com/auth/documents',
-    'https://www.googleapis.com/auth/gmail.send'
+    'https://www.googleapis.com/auth/gmail.send',
+    'https://www.googleapis.com/auth/gmail.compose'
 ]
 
 class GoogleWorkspaceClient:

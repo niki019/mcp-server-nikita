@@ -17,8 +17,12 @@ logger = logging.getLogger("gmail-mcp")
 
 mcp = FastMCP("Gmail-MCP")
 
-# Scope for Gmail (allows compose and send)
-SCOPES = ['https://www.googleapis.com/auth/gmail.compose', 'https://www.googleapis.com/auth/gmail.send']
+# Scope for Gmail and Google Docs (composed, sent, and documents)
+SCOPES = [
+    'https://www.googleapis.com/auth/documents',
+    'https://www.googleapis.com/auth/gmail.send',
+    'https://www.googleapis.com/auth/gmail.compose'
+]
 
 # Database path for idempotency
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gmail_idempotency.db")
