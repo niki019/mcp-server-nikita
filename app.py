@@ -216,6 +216,23 @@ with col4:
 
 # 5. Interactive Execution Panel
 st.subheader("🚀 Manual Run Execution")
+
+# Display cached execution result (from session state) so it persists after page refresh
+if "run_result" in st.session_state:
+    result = st.session_state["run_result"]
+    if result.get("status") == "completed":
+        st.success("Review Pulse pipeline finished successfully!")
+        st.balloons()
+        st.markdown(f"### 🎉 Run ID: `{result['run_id']}`")
+        st.markdown(f"- **Reviews analyzed:** {result['reviews_processed']}")
+        st.markdown(f"- **Google Doc report:** [Open Google Doc]({result['doc_url']})")
+    elif result.get("status") == "skipped":
+        st.warning(f"Run skipped: {result.get('message')}")
+    else:
+        st.error(f"Run failed: {result.get('error')}")
+    # Clear the session state so it doesn't repeat on subsequent manual refreshes
+    del st.session_state["run_result"]
+
 if st.sidebar.button("Trigger Weekly Review Pulse"):
     status_box = st.empty()
     status_box.info(f"Starting pipeline execution for week {target_week}...")
@@ -229,21 +246,12 @@ if st.sidebar.button("Trigger Weekly Review Pulse"):
             force_send=force_send
         ))
         
-        if res.get("status") == "completed":
-            status_box.success(f"Review Pulse pipeline finished successfully for week {target_week}!")
-            st.balloons()
-            
-            # Show output
-            st.markdown(f"### 🎉 Run ID: `{res['run_id']}`")
-            st.markdown(f"- **Reviews analyzed:** {res['reviews_processed']}")
-            st.markdown(f"- **Google Doc report:** [Open Google Doc]({res['doc_url']})")
-        elif res.get("status") == "skipped":
-            status_box.warning(f"Run skipped: {res.get('message')}")
-        else:
-            status_box.error(f"Run failed: {res.get('error')}")
+        # Save results in session state and trigger rerun to refresh metrics cards
+        st.session_state["run_result"] = res
+        st.rerun()
             
     except Exception as e:
-        status_box.error(f"Pipeline crashed with exception: {e}")
+        st.error(f"Pipeline crashed with exception: {e}")
 
 # 6. Audit Logs Visualizers
 tab1, tab2, tab3 = st.tabs(["📋 Execution History", "📦 Deliveries Ledger", "📖 Documentation & Guide"])
